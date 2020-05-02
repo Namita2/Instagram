@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Login from './screens/login/Login';
+import Home from './screens/home/Home';
+import Profile from './screens/profile/Profile';
+import Controller from './screens/Controller';
+import 'typeface-roboto';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Profile/>
   </React.StrictMode>,
   document.getElementById('root')
 );

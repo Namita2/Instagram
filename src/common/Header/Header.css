@@ -1,0 +1,39 @@
+*
+{ 
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+.app-header
+{
+    background-color:#263238;
+    height:50px;
+    padding:10px 8px 15px 8px;
+    overflow:auto;
+}
+.app-logo
+{
+    color:#fff;
+    font-size:18px;
+    float:left;
+}
+.profile-pic
+{
+    float:right;
+}
+.profile-icon
+{
+    border-radius:50%;
+    height:30px;
+    width:30px;
+}
+.search-container
+{
+    display:flex;
+    float:right;
+    background-color:#c0c0c0;
+    width: 300px;
+    border-radius:4px;
+    margin-right:8px;
+}
+
