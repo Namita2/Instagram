@@ -9,8 +9,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {Link} from 'react-router-dom';
-import loginData from '../../assets/loginData';
+import {username,password} from '../../assets/loginData';
+import { Redirect } from "react-router";
 
 class Login extends Component
 {
@@ -23,9 +23,8 @@ class Login extends Component
             usernameRequired:"dispNone",
             passwordRequired:"dispNone",
             incorrectUsernameOrPassword:"dispNone",
-            loggedIn: sessionStorage.getItem("access-token") == null ? false : true
-
-    }
+            isLoggedIn:false
+         }
 }
 
 loginClickHandler=()=>
@@ -33,13 +32,19 @@ loginClickHandler=()=>
     this.state.username==="" ? this.setState({usernameRequired:"dispBlock"}) :this.setState({usernameRequired:"dispNone"});
    this.state.password==="" ? this.setState({passwordRequired:"dispBlock"}) :this.setState({passwordRequired:"dispNone"});
     
-    if((this.state.username)&&(this.state.password))
+    if((this.state.username===username)&&(this.state.password===password))
     {
-          
-    }
+        console.log("Correct");
+        sessionStorage.setItem('session_key', "Bharath");
+        this.setState({isLoggedIn:true});
+     } 
+
     else
     {
+        //this.setState({incorrectUsernameOrPassword:"dispBlock"});
+       if( this.state.username.length>0 && this.state.password.length>0){
       this.setState({incorrectUsernameOrPassword:"dispBlock"})
+       }
     }
    
 }
@@ -54,34 +59,43 @@ inputPasswordChangeHandler=(e)=>
     this.setState({password:e.target.value})
 }
 
-
- render(){
+render()
+{
+     if(this.state.isLoggedIn===true)
+    {
+        return (
+            
+            <Redirect to="/home"/>
+           
+            )
+    }
   return(
-<div>
+       <div>
        <Header/> 
-       <Card style={{minWidth:'300px',maxWidth:'240px',margin:'auto',marginTop:'10px'}}>
+       <Card style={{minWidth:'340px',maxWidth:'240px',margin:'auto',marginTop:'12px',paddingLeft:'30px'}}>
            <CardContent>
             <FormControl>
-                <Typography style={{marginBottom:'20px'}}>
+                <Typography style={{marginBottom:'10px'}}>
                     LOGIN
                  </Typography>
             </FormControl>
                      <br/>
             <FormControl required>
                    <InputLabel htmlFor="username">Username</InputLabel>
-                   <Input type="text" id="username" username={this.state.username} onChange={this.inputUsernameChangeHandler}/>
+                   <Input style={{width:'220px'}}type="text" id="username" username={this.state.username} onChange={this.inputUsernameChangeHandler}/>
                    <FormHelperText className={this.state.usernameRequired}><span className="red">required</span></FormHelperText>
             </FormControl>
-                    <br/>
+                    <br/><br/>
             <FormControl required> 
                   <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input type="password" password={this.state.password} id="password" onChange={this.inputPasswordChangeHandler}/>
+                  <Input style={{width:'220px'}} type="password" password={this.state.password} id="password" onChange={this.inputPasswordChangeHandler}/>
                   <FormHelperText className={this.state.passwordRequired}><span className="red">required</span></FormHelperText>
+                  <br/>
             </FormControl>
                <br/>
               <br/>
               <FormHelperText className={this.state.incorrectUsernameOrPassword}><span className="red">Incorrect Username and/or Password</span></FormHelperText>
-              <Button className="btn" variant="contained" color="primary" onClick={this.loginClickHandler}>Login</Button>
+              <Button className="btn" style={{marginTop:'20px'}} variant="contained" color="primary" onClick={this.loginClickHandler}>Login</Button>
            </CardContent>
      </Card>
     </div>
